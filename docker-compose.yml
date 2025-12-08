@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: .
+    container_name: weather-backend
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file: .env
+    environment:
+      NODE_WATCH_USEPOLLING: "true"
+    command: ["npm", "run", "dev"]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    container_name: weather-redis
+    ports: 
+      - "6379:6379"
